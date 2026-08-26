@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ayro-cli — Profile</title>
+  <meta name="description" content="ayro-cli builds agentic CLI tools and ships fast, reliable web experiences. Developer profile, projects, and contact." />
+  <link rel="canonical" href="https://ayro-cli.github.io/agentic.github.io/" />
+  <meta name="theme-color" content="#0a0e14" />
+  <meta property="og:title" content="ayro-cli — Profile" />
+  <meta property="og:description" content="Agentic CLI tools and fast web experiences. Developer profile, projects, and contact." />
+  <meta property="og:type" content="profile" />
+  <meta property="og:url" content="https://ayro-cli.github.io/agentic.github.io/" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a0e14'/%3E%3Ctext x='50' y='70' font-family='monospace' font-size='58' font-weight='700' fill='%234ade80' text-anchor='middle'%3E&gt;_%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0e14;
+      --bg-2: #0d1219;
+      --surface: #11161f;
+      --surface-2: #161c27;
+      --border: #232b38;
+      --text: #e6edf3;
+      --muted: #8b98a9;
+      --muted-2: #64707f;
+      --accent: #4ade80;
+      --accent-dim: #22c55e;
+      --accent-soft: rgba(74, 222, 128, 0.12);
+      --radius: 14px;
+      --radius-sm: 10px;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.25);
+      --maxw: 1080px;
+      --ease: cubic-bezier(.2,.7,.2,1);
+    }
+    *,*::before,*::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    /* ambient background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(900px 600px at 80% -10%, rgba(74,222,128,.10), transparent 60%),
+        radial-gradient(700px 500px at 0% 10%, rgba(124,108,255,.08), transparent 55%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+    .skip-link {
+      position: absolute; left: -9999px; top: 8px;
+      background: var(--accent); color: #06210f; padding: 10px 14px;
+      border-radius: 8px; font-weight: 700; z-index: 100;
+    }
+    .skip-link:focus { left: 8px; }
+
+    /* nav */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(10,14,20,.72);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -.01em; }
+    .brand .dot {
+      width: 26px; height: 26px; border-radius: 7px;
+      background: var(--accent-soft); border: 1px solid var(--accent-dim);
+      display: grid; place-items: center; color: var(--accent);
+      font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 26px; }
+    .nav-links a { color: var(--muted); font-size: 14px; font-weight: 500; }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 14px;
+      border: 1px solid transparent; cursor: pointer; transition: all .18s var(--ease);
+    }
+    .btn-primary { background: var(--accent); color: #06210f; }
+    .btn-primary:hover { background: #34d378; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(74,222,128,.25); }
+    .btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+    .btn-ghost:hover { border-color: var(--accent-dim); background: var(--accent-soft); }
+    .btn:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+    /* hero */
+    .hero { padding: 72px 0 56px; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent);
+      background: var(--accent-soft); border: 1px solid var(--accent-dim);
+      padding: 6px 12px; border-radius: 999px; margin-bottom: 22px;
+    }
+    .eyebrow .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(74,222,128,.6); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(74,222,128,.5);} 70%{box-shadow:0 0 0 8px rgba(74,222,128,0);} 100%{box-shadow:0 0 0 0 rgba(74,222,128,0);} }
+    h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); line-height: 1.05; letter-spacing: -.03em; margin: 0 0 18px; font-weight: 800; }
+    h1 .accent { color: var(--accent); }
+    .lead { font-size: 1.15rem; color: var(--muted); max-width: 52ch; margin: 0 0 28px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 26px; color: var(--muted-2); font-size: 14px; }
+    .meta-row span { display: inline-flex; align-items: center; gap: 6px; }
+
+    /* terminal */
+    .terminal {
+      background: linear-gradient(180deg, #0c1118, #0a0e14);
+      border: 1px solid var(--border); border-radius: 14px;
+      box-shadow: var(--shadow); overflow: hidden;
+      font-family: 'JetBrains Mono', monospace; font-size: 13.5px;
+    }
+    .terminal-bar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 11px 14px; background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+    }
+    .terminal-bar .lights { display: flex; gap: 6px; }
+    .terminal-bar .lights i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+    .terminal-bar .lights i:nth-child(1){ background:#ff5f57; }
+    .terminal-bar .lights i:nth-child(2){ background:#febc2e; }
+    .terminal-bar .lights i:nth-child(3){ background:#28c840; }
+    .terminal-bar .title { margin-left: 8px; color: var(--muted-2); font-size: 12.5px; }
+    .terminal-body { padding: 18px 16px; min-height: 220px; color: var(--text); }
+    .terminal-body .prompt { color: var(--accent); }
+    .terminal-body .cmd { color: #c9d4e3; }
+    .terminal-body .out { color: var(--muted); white-space: pre-wrap; }
+    .terminal-body .key { color: #7c6cff; }
+    .cursor { display: inline-block; width: 8px; height: 15px; background: var(--accent); vertical-align: text-bottom; animation: blink 1s steps(2) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* sections */
+    section { padding: 64px 0; }
+    .section-head { margin-bottom: 36px; }
+    .section-head .kicker { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
+    .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -.02em; margin: 8px 0 0; }
+    .section-head p { color: var(--muted); margin: 10px 0 0; max-width: 60ch; }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; transition: border-color .18s var(--ease), transform .18s var(--ease); }
+    .card:hover { border-color: var(--accent-dim); transform: translateY(-2px); }
+    .card h3 { margin: 0 0 10px; font-size: 1.1rem; }
+    .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      font-family: 'JetBrains Mono', monospace; font-size: 13px;
+      padding: 8px 12px; border-radius: 8px; color: var(--text);
+      background: var(--surface); border: 1px solid var(--border);
+      transition: all .18s var(--ease);
+    }
+    .chip:hover { color: var(--accent); border-color: var(--accent-dim); background: var(--accent-soft); }
+
+    .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .project { display: flex; flex-direction: column; }
+    .project .tag { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); margin-bottom: 10px; }
+    .project p { color: var(--muted); font-size: .95rem; margin: 0 0 16px; flex: 1; }
+    .project .links { display: flex; gap: 14px; font-size: 13px; }
+
+    .contact { text-align: center; }
+    .contact .lead { margin: 0 auto 28px; }
+    .contact-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+    footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--muted-2); font-size: 13.5px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+    @media (max-width: 880px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .projects { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#" aria-label="ayro-cli home">
+        <span class="dot">&gt;_</span>
+        <span>ayro-cli</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="btn btn-ghost" href="https://github.com/ayro-cli" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow"><span class="pulse"></span> Available for work</span>
+          <h1>Hi, I'm <span class="accent">ayro-cli</span>.<br>I build agentic CLI tools.</h1>
+          <p class="lead">Developer focused on command-line agents, automation, and shipping fast, reliable web experiences. I turn ideas into shipped, observable products.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">View projects</a>
+            <a class="btn btn-ghost" href="#contact">Get in touch</a>
+          </div>
+          <div class="meta-row">
+            <span>📍 Remote</span>
+            <span>⚡ Fast turnaround</span>
+            <span>🛠️ CLI &amp; full-stack</span>
+          </div>
+        </div>
+
+        <div class="terminal" role="img" aria-label="Terminal showing ayro-cli profile output">
+          <div class="terminal-bar">
+            <span class="lights"><i></i><i></i><i></i></span>
+            <span class="title">ayro-cli@profile: ~</span>
+          </div>
+          <div class="terminal-body" id="term"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">// about</div>
+          <h2>What I do</h2>
+          <p>I build software that does real work — from agentic command-line tools to production web apps.</p>
+        </div>
+        <div class="about-grid">
+          <article class="card">
+            <h3>🤖 Agentic CLIs</h3>
+            <p>Command-line agents that plan, execute, and verify — automating the busywork so you can focus on what matters.</p>
+          </article>
+          <article class="card">
+            <h3>🌐 Web experiences</h3>
+            <p>Fast, accessible, well-structured frontends. Shipped on GitHub Pages, Cloudflare, and edge platforms.</p>
+          </article>
+          <article class="card">
+            <h3>⚙️ Automation</h3>
+            <p>Pipelines, schedulers, and integrations that run reliably and observably — no babysitting required.</p>
+          </article>
+          <article class="card">
+            <h3>🚀 Ship &amp; deploy</h3>
+            <p>From a blank repo to a live, deployed product. CI, tests, and clean docs included by default.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">// skills</div>
+          <h2>Tools I reach for</h2>
+        </div>
+        <div class="chips">
+          <span class="chip">TypeScript</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">Python</span>
+          <span class="chip">LLM tooling</span>
+          <span class="chip">Prompt engineering</span>
+          <span class="chip">GitHub Actions</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">Docker</span>
+          <span class="chip">Cloudflare</span>
+          <span class="chip">HTML/CSS</span>
+          <span class="chip">Automation</span>
+          <span class="chip">REST APIs</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">// projects</div>
+          <h2>Selected work</h2>
+          <p>A few things I've built and shipped.</p>
+        </div>
+        <div class="projects">
+          <article class="card project">
+            <div class="tag">CLI · OSS</div>
+            <h3>agentic-cli</h3>
+            <p>An agentic command-line framework for planning and executing multi-step tasks with verification at every step.</p>
+            <div class="links">
+              <a href="https://github.com/ayro-cli" target="_blank" rel="noopener">Source →</a>
+            </div>
+          </article>
+          <article class="card project">
+            <div class="tag">Web · Static</div>
+            <h3>Profile page</h3>
+            <p>This very page — a single-file, accessible, deploy-anywhere profile built on GitHub Pages.</p>
+            <div class="links">
+              <a href="https://ayro-cli.github.io/agentic.github.io/" target="_blank" rel="noopener">Live →</a>
+            </div>
+          </article>
+          <article class="card project">
+            <div class="tag">Automation</div>
+            <h3>workflows</h3>
+            <p>Scheduled and event-driven pipelines that keep services healthy, observable, and hands-off.</p>
+            <div class="links">
+              <a href="https://github.com/ayro-cli" target="_blank" rel="noopener">More →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">// contact</div>
+          <h2>Let's build something</h2>
+        </div>
+        <p class="lead">Have an idea, a project, or just want to say hi? My inbox is open.</p>
+        <div class="contact-actions">
+          <a class="btn btn-primary" href="mailto:ayro-cli@agentmail.to">Email me</a>
+          <a class="btn btn-ghost" href="https://github.com/ayro-cli" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> ayro-cli</span>
+      <span>Built with HTML &amp; deployed on GitHub Pages</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Terminal typing animation (skipped if reduced motion)
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const term = document.getElementById('term');
+    const lines = [
+      { t: 'cmd',   s: 'ayro-cli --whoami' },
+      { t: 'out',   s: '→ name:      ayro-cli' },
+      { t: 'out',   s: '→ role:      Agentic CLI & full-stack dev' },
+      { t: 'out',   s: '→ location:  Remote' },
+      { t: 'out',   s: '→ focus:     automation · LLM tooling · web' },
+      { t: 'out',   s: '→ status:    available for work' },
+      { t: 'cmd',   s: 'ayro-cli --ship' },
+      { t: 'out',   s: '✓ deployed to https://ayro-cli.github.io/agentic.github.io/' },
+    ];
+
+    function renderAll() {
+      term.innerHTML = lines.map(l =>
+        `<div><span class="${l.t==='cmd'?'prompt':''}">${l.t==='cmd'?'$ ':''}</span><span class="${l.t==='cmd'?'cmd':'out'}">${escapeHtml(l.s)}</span></div>`
+      ).join('') + '<span class="cursor"></span>';
+    }
+    function escapeHtml(s){ return s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+
+    if (reduce) { renderAll(); }
+    else {
+      let li = 0, ci = 0;
+      const out = [];
+      function step() {
+        if (li >= lines.length) { term.innerHTML = out.join('') + '<span class="cursor"></span>'; return; }
+        const line = lines[li];
+        const slice = line.s.slice(0, ci);
+        const html = `<div><span class="${line.t==='cmd'?'prompt':''}">${line.t==='cmd'?'$ ':''}</span><span class="${line.t==='cmd'?'cmd':'out'}">${escapeHtml(slice)}</span></div>`;
+        term.innerHTML = out.join('') + html + '<span class="cursor"></span>';
+        ci++;
+        if (ci > line.s.length) { out.push(html); li++; ci = 0; setTimeout(step, 260); }
+        else { setTimeout(step, 32 + Math.random()*40); }
+      }
+      step();
+    }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "ayro-cli",
+    "url": "https://ayro-cli.github.io/agentic.github.io/",
+    "sameAs": ["https://github.com/ayro-cli"],
+    "jobTitle": "Agentic CLI & full-stack developer",
+    "email": "mailto:ayro-cli@agentmail.to"
+  }
+  </script>
+</body>
+</html>
